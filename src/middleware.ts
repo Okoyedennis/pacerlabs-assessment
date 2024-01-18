@@ -5,12 +5,12 @@ export default function middleware(req: NextRequest) {
   let url = req.url;
 
   if (!verify && url.includes("/landingPage")) {
-    return NextResponse.redirect(`${process.env.FRONTEND_BASE_URL}/`);
+    return NextResponse.redirect("https://pacerlabs-assessment.vercel.app/");
   }
 
-  if (verify && url === `${process.env.FRONTEND_BASE_URL}/`) {
+  if (verify && url === "https://pacerlabs-assessment.vercel.app/") {
     return NextResponse.redirect(
-      `${process.env.FRONTEND_BASE_URL}/landingPage`
+      "https://pacerlabs-assessment.vercel.app/landingPage"
     );
   }
 }
