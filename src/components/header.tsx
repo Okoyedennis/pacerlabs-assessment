@@ -1,15 +1,26 @@
+"use client";
+
 import { userLogOut } from "@/redux/features/authSlice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const Header = () => {
-  const username = useAppSelector((state) => state.authReducer.value.username);
   const [loadingBtn, setLoadingBtn] = useState(false);
+  const [username, setUsername] = useState("");
 
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUsername = window.localStorage.getItem("username");
+      if (storedUsername) {
+        setUsername(storedUsername);
+      }
+    }
+  }, []);
 
   const logOut = () => {
     setLoadingBtn(true);
@@ -25,14 +36,12 @@ const Header = () => {
       clearTimeout(timeoutId);
     };
   };
+
   return (
     <div className="">
       <div className="container flex justify-between mx-auto items-center sticky top-0 bg-white z-[999] ">
         <h2 className="text-[20px] font-normal">
-          Welcome{" "}
-          <span className="font-semibold">
-            {localStorage.getItem("username")}
-          </span>
+          Welcome <span className="font-semibold">{username}</span>
         </h2>
         {loadingBtn ? (
           <button

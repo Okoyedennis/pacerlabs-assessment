@@ -21,12 +21,12 @@ export const auth = createSlice({
   initialState,
   reducers: {
     userLogOut: () => {
-      localStorage.removeItem("username");
+      window.localStorage.removeItem("username");
       Cookies.remove("loggedin");
       return initialState;
     },
     userLogIn: (_, action: PayloadAction<string>) => {
-      localStorage.setItem("username", action.payload);
+      window.localStorage.setItem("username", action.payload);
       Cookies.set("loggedin", "true");
       return {
         value: {
